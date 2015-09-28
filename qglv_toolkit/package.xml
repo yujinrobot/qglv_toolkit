@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <name>qglv_toolkit</name>
+  <version>0.1.0</version>
+  <description>
+    Navigation planning algorithms.
+  </description>
+  <url type="repository">https://github.com/stonier/qglv_toolkit</url>
+  <url type="bugtracker">https://github.com/stonier/qglv_toolkit/issues</url>
+  <license>BSD</license>
+  <maintainer email="stonier@yujinrobot.com">Daniel Stonier</maintainer>
+  <author>Daniel Stonier</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

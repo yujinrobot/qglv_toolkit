@@ -1,6 +1,0 @@
-Changelog
-=========
-
-Forthcoming
------------
-* initial prototype

@@ -1,3 +1,0 @@
-- builder: doxygen
-  file_patterns: '*.cpp *.hpp *.dox *.md'
-  homepage: http://wiki.ros.org/gopher_qgl_pathfinding

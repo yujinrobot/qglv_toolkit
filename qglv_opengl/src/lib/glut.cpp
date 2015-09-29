@@ -1,15 +1,17 @@
 /**
- * @file /qglv/src/lib/gl/glut.cpp
- * 
- * @brief Short description of this file.
+ * @file /src/lib/glut.cpp
  **/
 /*****************************************************************************
 ** Includes
 *****************************************************************************/
 
-#include <GL/gl.h>
-#include <QGLViewer/qglviewer.h>
-#include "../../../include/qglv/gl/glut.hpp"
+#include "../../include/qglv/gl/glut.hpp"
+
+/*****************************************************************************
+** Namespaces
+*****************************************************************************/
+
+namespace qglv {
 
 /*****************************************************************************
  ** Implementation
@@ -23,3 +25,5 @@ GLUquadricObj* glutFoo() {
 }
 
 //GLUquadricObj* quadric = glutFoo();
+
+} // namespace qglv

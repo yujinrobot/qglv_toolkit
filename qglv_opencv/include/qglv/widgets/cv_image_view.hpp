@@ -1,40 +1,52 @@
 /**
- * @file include/qglv/opencv.hpp
+ * @file /include/qglv/widgets/cv_image_view.hpp
  **/
 /*****************************************************************************
 ** Ifdefs
 *****************************************************************************/
 
-#ifndef qglv_OPENCV_HPP_
-#define qglv_OPENCV_HPP_
+#ifndef qglv_WIDGETS_CV_IMAGE_VIEW_HPP_
+#define qglv_WIDGETS_CV_IMAGE_VIEW_HPP_
 
 /*****************************************************************************
 ** Includes
 *****************************************************************************/
 
-#include <QImage>
-#include <QPixmap>
+#include <opencv2/core/core.hpp>
 
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/imgproc/types_c.h>
-
-#include "widgets/cv_image_view.hpp"
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
 
 namespace qglv {
-namespace cv {
 
 /*****************************************************************************
-** Converters
+** Interfaces
 *****************************************************************************/
 
-std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat);
-std::pair<::cv::Mat, QPixmap> matToQPixmap(const ::cv::Mat &inMat);
+class CvImageView : public QGraphicsView
+{
+  Q_OBJECT
 
-} // namespace cv
+public:
+  CvImageView(QWidget *parent = 0);
+
+public slots:
+  void showImage(const ::cv::Mat& image);
+  void show404Image();
+
+protected:
+  void showEvent(QShowEvent *);
+  void resizeEvent(QResizeEvent* event);
+
+private:
+  QGraphicsScene* scene;
+  ::cv::Mat image_internal_storage; // required as QImage always needs an external buffer.
+};
+
 } // namespace qglv
 
-#endif /* qglv_OPENCV_HPP_ */
+#endif /* qglv_WIDGETS_CV_IMAGE_VIEW_HPP_ */

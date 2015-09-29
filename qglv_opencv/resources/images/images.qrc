@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="images">
+    <file>never.jpg</file>
+  </qresource>
+</RCC>

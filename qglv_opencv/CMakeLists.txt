@@ -62,4 +62,4 @@ add_subdirectory(src)
 # Installs
 ##############################################################################
 
-#install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(DIRECTORY resources DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

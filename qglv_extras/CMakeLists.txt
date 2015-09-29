@@ -3,7 +3,7 @@
 ##############################################################################
 
 cmake_minimum_required(VERSION 2.8.3)
-project(qglv_opengl)
+project(qglv_extras)
 
 ##############################################################################
 # Find Packages
@@ -14,18 +14,17 @@ find_package(catkin
     COMPONENTS
         cmake_modules
         ecl_build
+        qglv_opengl
     )
 
 find_package(Eigen REQUIRED)
 find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)  # Opengl3 stuff
 find_package(sophus REQUIRED)
-
-# be nice to get rid of this as we only use it for two things - 1) text
-# rendering and 2) libqglviewer doesn't directly depend on it, but
-# including some of the example program apis brings in this
-# requirement...
-find_package(GLUT REQUIRED)
+find_path(QGLViewer_INCLUDE_DIRS QGLViewer/qglviewer.h)
+find_library(QGLViewer_LIBRARY NAMES QGLViewer)
+# Since we have no cmake module, for QGLViewer, we must fetch qt ourselves.
+set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
+find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 
 ##############################################################################
 # Catkin
@@ -33,20 +32,22 @@ find_package(GLUT REQUIRED)
 
 # Because it does not set an xxxx_INCLUDE_DIRS...
 set(OPENGL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR})
-set(GLUT_INCLUDE_DIRS ${GLUT_INCLUDE_DIR})
+# Note : do not use QT_INCLUDE_DIR - that is only /usr/include/qt4 whereas
+#        QT_INCLUDES brings in all the required components
+set(QT_INCLUDE_DIRS ${QT_INCLUDES})
 
 catkin_package(
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME} 
-#    CATKIN_DEPENDS
+    CATKIN_DEPENDS
+        qglv_opengl
     DEPENDS
         Eigen
-        GLUT
-        GLEW
         OPENGL
+        QGLViewer
+        QT
         sophus
-    )
-
+)
 
 ##############################################################################
 # Project Configuration
@@ -56,12 +57,13 @@ ecl_enable_cxx11_compiler()
 add_definitions(${catkin_DEFINITIONS})
 include_directories(
     include
-    ${catkin_INCLUDE_DIRS}
-    ${EIGEN_INCLUDE_DIRS}
-    ${GLUT_INCLUDE_DIR}
-    ${GLEW_INCLUDE_DIRS}
+    ${QGLViewer_INCLUDE_DIRS}
+    ${QT_INCLUDES}    # list of escaped QtCore, ... subdirs.
+    ${QT_INCLUDE_DIR} # the root level qt4 dir
     ${OPENGL_INCLUDE_DIR}
     ${sophus_INCLUDE_DIRS}
+    ${EIGEN_INCLUDE_DIRS}
+    ${catkin_INCLUDE_DIRS}
 )
 
 ##############################################################################

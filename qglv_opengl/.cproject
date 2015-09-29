@@ -18,7 +18,7 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.1667855244.1431171031" name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.169031462" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.274131102" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder id="cdt.managedbuild.target.gnu.builder.base.70116707" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<builder arguments="-f ${YUJIN_WORKSPACE}/build/qglv_toolkit/${ProjName}/Makefile -j8" command="make" id="cdt.managedbuild.target.gnu.builder.base.70116707" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.879005388" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.827919435" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1169599698" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -39,8 +39,11 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="gl" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv"/>
+						<entry excluding="gl|objects|primitives" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv/gl"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv/objects"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv/primitives"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/lib"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -65,4 +68,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

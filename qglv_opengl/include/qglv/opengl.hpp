@@ -12,5 +12,16 @@
 ** Includes
 *****************************************************************************/
 
+#include "gl/headers.hpp"
+#include "gl/helpers.hpp"
+#include "gl/colours.hpp"
+#include "primitives/geometry.hpp"
+#include "primitives/arrow.hpp"
+#include "primitives/pose.hpp"
+#include "primitives/text.hpp"
+#include "objects/edges.hpp"
+#include "objects/keyframes.hpp"
+#include "objects/odometry.hpp"
+#include "objects/path.hpp"
 
 #endif /* qglv_OPENGL_HPP_ */

@@ -2,9 +2,7 @@
 # Subdirectories
 ##############################################################################
 
-add_subdirectory(gl)
-add_subdirectory(objects)
-add_subdirectory(primitives)
+#add_subdirectory(cv)
 
 ###############################################################################
 # Files

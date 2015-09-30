@@ -25,14 +25,14 @@
 *****************************************************************************/
 
 namespace qglv {
-namespace cv {
+namespace opencv {
 
 /*****************************************************************************
 ** Converters
 *****************************************************************************/
 
-std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat);
-std::pair<::cv::Mat, QPixmap> matToQPixmap(const ::cv::Mat &inMat);
+std::pair<cv::Mat, QImage> matToQImage(const cv::Mat &inMat);
+std::pair<cv::Mat, QPixmap> matToQPixmap(const cv::Mat &inMat);
 
 } // namespace cv
 } // namespace qglv

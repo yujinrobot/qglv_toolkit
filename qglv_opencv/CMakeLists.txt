@@ -14,11 +14,13 @@ find_package(catkin
     COMPONENTS
         cmake_modules
         ecl_build
+        ecl_command_line
     )
 
 find_package(OpenCV REQUIRED)
 set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+include(${QT_USE_FILE})
 
 ##############################################################################
 # Catkin
@@ -31,7 +33,9 @@ set(QT_INCLUDE_DIRS ${QT_INCLUDES})
 
 catkin_package(
     INCLUDE_DIRS include
-    LIBRARIES ${PROJECT_NAME} 
+    LIBRARIES ${PROJECT_NAME}
+    CATKIN_DEPENDS
+        ecl_command_line
     DEPENDS
         QT
         OpenCV

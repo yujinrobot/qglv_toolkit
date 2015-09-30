@@ -25,13 +25,13 @@
 *****************************************************************************/
 
 namespace qglv {
-namespace cv {
+namespace opencv {
 
 /*****************************************************************************
 ** Implementation
 *****************************************************************************/
 
-std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat)
+std::pair<cv::Mat, QImage> matToQImage(const cv::Mat &inMat)
 {
   switch (inMat.type())
   {
@@ -40,7 +40,7 @@ std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat)
     {
       QImage image(inMat.data, inMat.cols, inMat.rows, inMat.step, QImage::Format_RGB32);
 
-      return std::pair<::cv::Mat, QImage>(inMat, image);
+      return std::pair<cv::Mat, QImage>(inMat, image);
     }
 
       // 8-bit, 3 channel
@@ -48,7 +48,7 @@ std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat)
     {
       QImage image(inMat.data, inMat.cols, inMat.rows, inMat.step, QImage::Format_RGB888);
 
-      return std::pair<::cv::Mat, QImage>(inMat, image.rgbSwapped());
+      return std::pair<cv::Mat, QImage>(inMat, image.rgbSwapped());
     }
 
       // 8-bit, 1 channel
@@ -67,19 +67,19 @@ std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat)
 
       image.setColorTable(sColorTable);
 
-      return std::pair<::cv::Mat, QImage>(inMat, image);
+      return std::pair<cv::Mat, QImage>(inMat, image);
     }
 
     case CV_16UC1:  // typically a depth image, convert to 8UC1 and normalize it
     {
       // no idea how to put a 16bit grayscale into a qimage - thre doesn't seem to be a
       // type for that.
-      ::cv::Mat downsized_image;
+      cv::Mat downsized_image;
 
       // normalise
       double min;
       double max;
-      ::cv::minMaxIdx(inMat, &min, &max);
+      cv::minMaxIdx(inMat, &min, &max);
       inMat.convertTo(downsized_image, CV_8UC1, 255/(max-min), -min);
 
       static QVector<QRgb> sColorTable;
@@ -95,21 +95,21 @@ std::pair<::cv::Mat, QImage> matToQImage(const ::cv::Mat &inMat)
 
       image.setColorTable(sColorTable);
 
-      return std::pair<::cv::Mat, QImage>(downsized_image, image);
+      return std::pair<cv::Mat, QImage>(downsized_image, image);
     }
 
     default:
-      qWarning() << "dslam_viewer::cvMatToQImage() - cv::Mat image type not handled in switch:" << inMat.type();
+      qWarning() << "qglv::cv::matToQImage() - cv::Mat image type not handled in switch:" << inMat.type();
       break;
   }
 
-  return std::pair<::cv::Mat, QImage>(::cv::Mat(), QImage());
+  return std::pair<cv::Mat, QImage>(cv::Mat(), QImage());
 }
 
-std::pair<::cv::Mat, QPixmap> matToQPixmap(const ::cv::Mat &inMat)
+std::pair<cv::Mat, QPixmap> matToQPixmap(const cv::Mat &inMat)
 {
-  std::pair<::cv::Mat, QImage> pair = matToQImage(inMat);
-  return std::pair<::cv::Mat, QPixmap>(pair.first, QPixmap::fromImage(pair.second));
+  std::pair<cv::Mat, QImage> pair = matToQImage(inMat);
+  return std::pair<cv::Mat, QPixmap>(pair.first, QPixmap::fromImage(pair.second));
 }
 
 } // namespace cv

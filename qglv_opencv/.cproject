@@ -41,6 +41,7 @@
 					<sourceEntries>
 						<entry excluding="widgets" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv/widgets"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src/applications"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src/lib"/>
 					</sourceEntries>
 				</configuration>

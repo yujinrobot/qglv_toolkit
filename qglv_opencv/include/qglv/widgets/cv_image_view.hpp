@@ -35,7 +35,7 @@ public:
   CvImageView(QWidget *parent = 0);
 
 public slots:
-  void showImage(const ::cv::Mat& image);
+  void showImage(cv::Mat image);
   void show404Image();
 
 protected:
@@ -44,7 +44,7 @@ protected:
 
 private:
   QGraphicsScene* scene;
-  ::cv::Mat image_internal_storage; // required as QImage always needs an external buffer.
+  cv::Mat image_internal_storage; // required as QImage always needs an external buffer.
 };
 
 } // namespace qglv

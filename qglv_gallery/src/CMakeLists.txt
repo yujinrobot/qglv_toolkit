@@ -11,8 +11,10 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})  # this is where ui headers are
 ##############################################################################
 
 macro(${PROJECT_NAME}_add_demo name)
-  add_executable(${name} ${name}.cpp ${MOC_SOURCES} ${ARGN})
-  target_link_libraries(${name}
+  set(target_name ${PROJECT_NAME}_${name})  # unique target names
+  add_executable(${target_name} ${name}.cpp ${MOC_SOURCES} ${ARGN})
+  set_target_properties(${target_name} PROPERTIES OUTPUT_NAME ${name})
+  target_link_libraries(${target_name}
       ${QGLViewer_LIBRARY}
       ${QT_LIBRARIES}
       ${GLUT_LIBRARY}
@@ -20,7 +22,7 @@ macro(${PROJECT_NAME}_add_demo name)
       ${catkin_LIBRARIES}
     )
   # install rule only valid if it is not EXCLUDE_FROM_ALL above.
-  install(TARGETS ${name} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+  install(TARGETS ${target_name} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 endmacro()
 
 ##############################################################################

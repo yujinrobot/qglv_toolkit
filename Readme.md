@@ -21,6 +21,16 @@ If building your own gl classes:
 
 * Make sure you call the gl headers first so you don't end up with GL/Glew conflicts.
 
+Creating an application with a qglviewer with lots of lighting/keyboard/mouse/... settings appropriate
+for our use cases, simply inherit our QGLViewer first:
+
+```
+#include <qglv/opengl.hpp>
+#include <qglv/extras.hpp>
+
+class MyQGLViewerCanvas : public qglv::QGLViewer
+```
+
 Dev Notes
 =========
 

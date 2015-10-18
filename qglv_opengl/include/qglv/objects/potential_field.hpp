@@ -98,6 +98,6 @@ typedef std::shared_ptr<PotentialField> PotentialFieldPtr;
  ** Trailers
  *****************************************************************************/
 
-} // namespace dslam_viewer
+} // namespace qglv
 
 #endif /* qglv_OBJECTS_POTENTIAL_FIELD_HPP_ */

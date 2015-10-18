@@ -22,6 +22,9 @@
 #include "objects/edges.hpp"
 #include "objects/keyframes.hpp"
 #include "objects/odometry.hpp"
+#include "objects/particles.hpp"
 #include "objects/path.hpp"
+#include "objects/potential_field.hpp"
+
 
 #endif /* qglv_OPENGL_HPP_ */

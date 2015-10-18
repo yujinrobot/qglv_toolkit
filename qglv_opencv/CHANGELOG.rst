@@ -3,4 +3,4 @@ Changelog
 
 Forthcoming
 -----------
-* initial prototype
+* ported from dslam_viewer 0.3.1

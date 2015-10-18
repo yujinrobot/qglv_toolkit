@@ -27,8 +27,24 @@ namespace qglv {
 ** Factories
 *****************************************************************************/
 
-KeyFrame createKeyFrameFromPointCloud(const Sophus::SE3f& T_depth_rel_map,
-                                      const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud);
+KeyFrame createKeyFrameFromPointCloud(
+    const Sophus::SE3f& T_depth_rel_map,
+    const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud
+    );
+
+KeyFramePtr createKeyFramePtrFromPointCloud(
+    const Sophus::SE3f& T_depth_rel_map,
+    const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud
+    );
+
+/**
+ * @brief Implementation of the createKeyFrameFromPointCloud methods.
+ */
+void _initKeyFrameFromPointCloud(
+    KeyFrame& keyframe,
+    const Sophus::SE3f& T_depth_rel_map,
+    const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud
+    );
 
 } // namespace qglv
 

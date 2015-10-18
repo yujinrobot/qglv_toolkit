@@ -21,10 +21,32 @@ namespace qglv {
 ** Implementation
 *****************************************************************************/
 
-KeyFrame createKeyFrameFromPointCloud(const Sophus::SE3f& T_depth_rel_map,
-                                      const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud)
+KeyFrame createKeyFrameFromPointCloud(
+    const Sophus::SE3f& T_depth_rel_map,
+    const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud
+    )
 {
   KeyFrame keyframe;
+  _initKeyFrameFromPointCloud(keyframe, T_depth_rel_map, point_cloud);
+  return keyframe;
+}
+
+KeyFramePtr createKeyFramePtrFromPointCloud(
+    const Sophus::SE3f& T_depth_rel_map,
+    const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud
+    )
+{
+  KeyFramePtr keyframe_ptr = std::make_shared<qglv::KeyFrame>();
+  _initKeyFrameFromPointCloud(*keyframe_ptr, T_depth_rel_map, point_cloud);
+  return keyframe_ptr;
+}
+
+void _initKeyFrameFromPointCloud(
+    KeyFrame& keyframe,
+    const Sophus::SE3f& T_depth_rel_map,
+    const std::shared_ptr<pcl::PCLPointCloud2>& point_cloud
+    )
+{
   keyframe.T_frame_rel_map = T_depth_rel_map;
   keyframe.updated = true;
   // keyframe.gl_id_start = -1;
@@ -50,8 +72,6 @@ KeyFrame createKeyFrameFromPointCloud(const Sophus::SE3f& T_depth_rel_map,
     keyframe.intensities[3*i+1] = 255*g;
     keyframe.intensities[3*i+2] = 255*b;
   }
-  // variance_lines is nothing
-  return keyframe;
 }
 
 } // namespace qglv

@@ -38,6 +38,10 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include/qglv"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src/lib"/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -46,13 +50,19 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="qglv_pcl.null.1345259362" name="qglv_pcl"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Default">
 			<resource resourceType="PROJECT" workspacePath="/qglv_pcl"/>
 		</configuration>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1818193469;cdt.managedbuild.toolchain.gnu.base.1818193469.1944211750;cdt.managedbuild.tool.gnu.c.compiler.base.1469694635;cdt.managedbuild.tool.gnu.c.compiler.input.31161290">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1818193469;cdt.managedbuild.toolchain.gnu.base.1818193469.1944211750;cdt.managedbuild.tool.gnu.cpp.compiler.base.1016879470;cdt.managedbuild.tool.gnu.cpp.compiler.input.1475739248">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>

@@ -18,7 +18,6 @@
 *****************************************************************************/
 
 namespace qglv {
-namespace draw {
 
 /*****************************************************************************
  ** Drawing methods
@@ -35,6 +34,5 @@ void poseQGLStyle(const Sophus::SE3f &pose, float size) {
   glPopMatrix();
 }
 
-} // namespace draw
 } // namespace qglv
 

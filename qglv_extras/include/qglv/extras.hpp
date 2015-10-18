@@ -12,6 +12,7 @@
 ** Includes
 *****************************************************************************/
 
+#include <qglv/opengl.hpp>  // must be 1st for correct seq. of gl headers
 #include "converters/sophus_to_qgl.hpp"
 #include "primitives/qgl_pose.hpp"
 #include "objects/camera.hpp"

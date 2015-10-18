@@ -14,6 +14,7 @@
 
 //#include <dslam_math_helpers/sophus.hpp>
 #include <Eigen/Core>
+#include <memory>
 #include <QGLViewer/qglviewer.h>
 #include <QGLViewer/mouseGrabber.h>
 #include <QMouseEvent>

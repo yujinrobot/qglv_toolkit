@@ -12,6 +12,7 @@
 ** Includes
 *****************************************************************************/
 
+#include <qglv/opengl.hpp>
 #include <QGLViewer/qglviewer.h>
 #include <QString>
 #include <QWidget>

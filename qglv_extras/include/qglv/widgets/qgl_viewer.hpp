@@ -34,7 +34,7 @@ class QGLViewer : public ::QGLViewer
 {
   Q_OBJECT
 public :
-  QGLViewer(QWidget *parent);
+  QGLViewer(QWidget *parent = nullptr);
   virtual ~QGLViewer();
   virtual void init();
   virtual QString helpString() const;  // overload this

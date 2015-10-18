@@ -25,6 +25,7 @@ find_library(QGLViewer_LIBRARY NAMES QGLViewer)
 # Since we have no cmake module, for QGLViewer, we must fetch qt ourselves.
 set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
 find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
+include(${QT_USE_FILE})
 
 ##############################################################################
 # Catkin

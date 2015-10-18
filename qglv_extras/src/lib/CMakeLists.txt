@@ -25,8 +25,9 @@ add_library(${PROJECT_NAME} ${SOURCES} ${MOC_SOURCES})
 target_link_libraries(${PROJECT_NAME}
     ${catkin_LIBRARIES}
     ${OPENGL_LIBRARY}
+    ${QT_LIBRARIES}
     ${QGLViewer_LIBRARY}
-) 
+)
 
 ##############################################################################
 # Installs

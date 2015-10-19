@@ -1,6 +1,6 @@
 <package>
   <name>qglv_pcl</name>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <description>
     OpenGL, PCL, ...
   </description>

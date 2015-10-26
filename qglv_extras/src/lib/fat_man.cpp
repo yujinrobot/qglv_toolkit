@@ -80,7 +80,7 @@ Eigen::Vector3f FatMan::_pointOnZPlane(const QPoint& point, const qglviewer::Cam
   Eigen::Vector3f point_on_z_plane;
   point_on_z_plane << origin.x + alpha*direction.x,
                       origin.y + alpha*direction.y,
-                      0.0;
+                      0.05;
   return point_on_z_plane;
 }
 

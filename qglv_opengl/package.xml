@@ -17,6 +17,8 @@
   <build_depend>eigen</build_depend>
   <build_depend>glut</build_depend>
   <build_depend>libglew-dev</build_depend>
+  <build_depend>libxi-dev</build_depend>   <!-- glut library -->
+  <build_depend>libxmu-dev</build_depend>  <!-- glut library -->
   <build_depend>opengl</build_depend>
   <build_depend>sophus</build_depend>
 
@@ -24,9 +26,10 @@
   <run_depend>eigen</run_depend>
   <run_depend>glut</run_depend>
   <run_depend>libglew-dev</run_depend>
+  <run_depend>libxi-dev</run_depend>   <!-- glut library -->
+  <run_depend>libxmu-dev</run_depend>  <!-- glut library -->
   <run_depend>opengl</run_depend>
   <run_depend>sophus</run_depend>
-
 
   <export>
     <rosdoc config="rosdoc.yaml" />

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>qglv_toolkit</name>
-  <version>0.1.4</version>
+  <version>0.1.5</version>
   <description>
     Qt, QGLViewer, OpenGL, GLEW, GLUT and some extensions for using with robotics experiments.
   </description>

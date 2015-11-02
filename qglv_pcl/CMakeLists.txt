@@ -14,6 +14,7 @@ find_package(catkin
     COMPONENTS
         cmake_modules
         ecl_build
+        pcl_conversions
         qglv_opengl
     )
 
@@ -27,6 +28,7 @@ catkin_package(
     INCLUDE_DIRS include
     LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS
+        pcl_conversions
         qglv_opengl 
     DEPENDS
         PCL

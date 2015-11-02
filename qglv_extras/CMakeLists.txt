@@ -20,10 +20,20 @@ find_package(catkin
 find_package(Eigen REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(sophus REQUIRED)
+
+# TODO: put this logic in a cmake find module - repeated in qglv_gallery
 find_path(QGLViewer_INCLUDE_DIRS QGLViewer/qglviewer.h)
 find_library(QGLViewer_LIBRARY NAMES QGLViewer)
 # Since we have no cmake module, for QGLViewer, we must fetch qt ourselves.
 set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
+if(QGLViewer_INCLUDE_DIRS)
+  set(QGLViewer_VERSION_FILE ${QGLViewer_INCLUDE_DIRS}/QGLViewer/config.h)
+  file(READ ${QGLViewer_VERSION_FILE} QGLViewer_VERSION_FILE_CONTENTS)
+  string(REGEX MATCH "#define QGLVIEWER_VERSION 0x[0-9]+" QGLViewer_VERSION "${QGLViewer_VERSION_FILE_CONTENTS}")
+  string(REGEX REPLACE "#define QGLVIEWER_VERSION 0x0([0-9]+)" "\\1" QGLViewer_VERSION "${QGLViewer_VERSION}")
+  message(STATUS "QGLViewer_VERSION..........${QGLViewer_VERSION}")
+endif()
+
 find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 include(${QT_USE_FILE})
 
@@ -37,18 +47,23 @@ set(OPENGL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR})
 #        QT_INCLUDES brings in all the required components
 set(QT_INCLUDE_DIRS ${QT_INCLUDES})
 
-catkin_package(
-    INCLUDE_DIRS include
-    LIBRARIES ${PROJECT_NAME} 
-    CATKIN_DEPENDS
-        qglv_opengl
-    DEPENDS
-        Eigen
-        OPENGL
-        QGLViewer
-        QT
-        sophus
-)
+# not supporting versions older than that on ubuntu trusty
+if(${QGLViewer_VERSION} GREATER "20304")
+    catkin_package(
+        INCLUDE_DIRS include
+        LIBRARIES ${PROJECT_NAME} 
+        CATKIN_DEPENDS
+            qglv_opengl
+        DEPENDS
+            Eigen
+            OPENGL
+            QGLViewer
+            QT
+            sophus
+    )
+else()
+    catkin_package()
+endif()
 
 ##############################################################################
 # Project Configuration
@@ -71,8 +86,11 @@ include_directories(
 # Sources
 ##############################################################################
 
-add_subdirectory(include)
-add_subdirectory(src)
+# not supporting versions older than that on ubuntu trusty
+if(${QGLViewer_VERSION} GREATER "20304")
+    add_subdirectory(include)
+    add_subdirectory(src)
+endif()
 
 ##############################################################################
 # Installs

@@ -15,10 +15,20 @@ find_package(catkin
     )
 
 find_package(OpenGL REQUIRED)
+
+# TODO: put this logic in a cmake find module - repeated in qglv_extras
 find_path(QGLViewer_INCLUDE_DIRS QGLViewer/qglviewer.h)
 find_library(QGLViewer_LIBRARY NAMES QGLViewer)
 # Since we have no cmake module, for QGLViewer, we must fetch qt ourselves.
 set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
+if(QGLViewer_INCLUDE_DIRS)
+  set(QGLViewer_VERSION_FILE ${QGLViewer_INCLUDE_DIRS}/QGLViewer/config.h)
+  file(READ ${QGLViewer_VERSION_FILE} QGLViewer_VERSION_FILE_CONTENTS)
+  string(REGEX MATCH "#define QGLVIEWER_VERSION 0x[0-9]+" QGLViewer_VERSION "${QGLViewer_VERSION_FILE_CONTENTS}")
+  string(REGEX REPLACE "#define QGLVIEWER_VERSION 0x0([0-9]+)" "\\1" QGLViewer_VERSION "${QGLViewer_VERSION}")
+  message(STATUS "QGLViewer_VERSION..........${QGLViewer_VERSION}")
+endif()
+
 find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 include(${QT_USE_FILE})
 
@@ -54,7 +64,10 @@ include_directories(
 # Sources
 ##############################################################################
 
-add_subdirectory(src)
+if(${QGLViewer_VERSION} GREATER "20304")
+  # not supporting versions of qglviewer previous to trusty
+  add_subdirectory(src)
+endif()
 
 ##############################################################################
 # Installs

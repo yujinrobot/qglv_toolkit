@@ -64,8 +64,9 @@ include_directories(
 # Sources
 ##############################################################################
 
-if(${QGLViewer_VERSION} GREATER "20304")
-  # not supporting versions of qglviewer previous to trusty
+# ubuntu saucy has 203xx versions, make sure to avoid building them as
+# we currently do not support (trusty has 205xx)
+if(${QGLViewer_VERSION} GREATER "20399")
   add_subdirectory(src)
 endif()
 

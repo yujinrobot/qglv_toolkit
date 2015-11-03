@@ -47,8 +47,9 @@ set(OPENGL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR})
 #        QT_INCLUDES brings in all the required components
 set(QT_INCLUDE_DIRS ${QT_INCLUDES})
 
-# not supporting versions older than that on ubuntu trusty
-if(${QGLViewer_VERSION} GREATER "20304")
+# ubuntu saucy has 203xx versions, make sure to avoid building them as
+# we currently do not support (trusty has 205xx)
+if(${QGLViewer_VERSION} GREATER "20399")
     catkin_package(
         INCLUDE_DIRS include
         LIBRARIES ${PROJECT_NAME} 
@@ -86,10 +87,12 @@ include_directories(
 # Sources
 ##############################################################################
 
-# not supporting versions older than that on ubuntu trusty
-if(${QGLViewer_VERSION} GREATER "20304")
+
+# ubuntu saucy has 203xx versions, make sure to avoid building them as
+# we currently do not support (trusty has 205xx)
+if(${QGLViewer_VERSION} GREATER "20399")
     add_subdirectory(include)
-    add_subdirectory(src)
+  add_subdirectory(src)
 endif()
 
 ##############################################################################

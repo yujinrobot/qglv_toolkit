@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Forthcoming
------------
+0.1.6 (2015-11-03)
+------------------
 * legacy support on old versions is 203xx, not 20304.
 
 0.1.4 (2015-11-02)

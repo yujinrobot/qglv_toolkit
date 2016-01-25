@@ -39,7 +39,8 @@ namespace qglv {
  * It is also possible to generate keyframes from point clouds.
  * Refer to the qglv_pcl package for api.
  */
-class KeyFrame {
+class KeyFrame 
+{
 public:
   KeyFrame()
   : id(-1)
@@ -57,6 +58,18 @@ public:
            const Sophus::SE3f& T_frame_rel_map,
            const AxisColourScheme& axis_colour_scheme=AxisColourRGB,
            const float& axis_scale_factor=1.0);
+  
+  /**
+   * Generate from simple dslam pc keyframe data.
+   */
+  KeyFrame(const int id,
+           const Sophus::SE3f& T,
+           const bool& pinned,
+           const std::vector< Eigen::Vector3f > & seeds, 
+           const std::vector<float> & seed_variances,
+           const std::vector<unsigned char>& seed_intensities, // intensity
+           const float& focal_length_times_baseline
+          );
 
   /**
    * Generate from simple dslam pc keyframe data.
@@ -64,9 +77,10 @@ public:
   KeyFrame(const int id,
            const Sophus::SE3f& T,
            const bool& pinned,
-           const std::vector<Eigen::Vector3f>& seeds,
-           const std::vector<float>& seed_variances,
-           const std::vector<unsigned char>& seed_intensities,
+           const std::vector<float> & nics,
+           const std::vector<float> & idepths, 
+           const std::vector<float> & seed_variances,
+           const std::vector<unsigned char>& seed_intensities_and_grad, // it consists of intensity, gx, gy. you have to use intensity
            const float& focal_length_times_baseline
           );
   /**
@@ -74,9 +88,10 @@ public:
    */
   KeyFrame(
            const Sophus::SE3f& T,
-           const std::vector<Eigen::Vector3f>& seeds,
-           const std::vector<float>& seed_variances,
-           const std::vector<unsigned char>& seed_intensities // as a ratio, to convert to rgb
+           const std::vector<float> & nics,
+           const std::vector<float> & idepths, 
+           const std::vector<float> & seed_variances,
+           const std::vector<unsigned char>& seed_intensities_and_grad // as a ratio, to convert to rgb. // it consists of intensity, gx, gy. you have to use intensity
           );
   ~KeyFrame();
 

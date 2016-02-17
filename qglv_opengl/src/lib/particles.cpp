@@ -64,7 +64,7 @@ void Particles::_glGenLists()
   static const float draw_arrow_radius = 0.01;
   
   glNewList( gl_id, GL_COMPILE );
-  glColor3f(0.2f, 0.1f, 0.1f);
+  glColor3f(0.8f, 0.4f, 0.4f);
   
   
   for( int i(0); i<T.size(); i++ )

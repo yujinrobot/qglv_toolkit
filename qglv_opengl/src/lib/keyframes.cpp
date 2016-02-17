@@ -45,12 +45,11 @@ KeyFrame::KeyFrame(const int id,
 ** Construct from a Tracking Frame
 *****************************************************************************/
 
-KeyFrame::KeyFrame(
-         const Sophus::SE3f& T,
-         const std::vector<Eigen::Vector3f>& seeds,
-         const std::vector<float>& seed_variances,
-         const std::vector<unsigned char>& seed_intensities
-        )
+KeyFrame::KeyFrame( const Sophus::SE3f& T,
+                    const std::vector<float> & nics,
+                    const std::vector<float> & idepths, 
+                    const std::vector<float>& seed_variances,
+                    const std::vector<unsigned char>& seed_intensities_and_grad )
 : id(-1)
 , T_frame_rel_map(T)
 , updated(true)
@@ -60,26 +59,24 @@ KeyFrame::KeyFrame(
 , axis_scale_factor(1.25)
 {
   // not very optimal...better to reserve and then push back
-  vertices.resize( seeds.size() * 3 );
-  variance_lines.resize( seeds.size() * 3 * 2 );
+  vertices.resize( idepths.size() * 3 );
+  variance_lines.resize( idepths.size() * 3 * 2 );
 
   // precompute some data for the point clouds
   float * ptr_vertices = vertices.data();
   float * ptr_var = variance_lines.data();
   Eigen::Vector3f lm0, lmp, lmn;
 
-  for( int j(0); j < seeds.size(); j++ )
+  for( int j(0); j < idepths.size(); j++ )
   {
     float r, g, b;
-    normalisedValueToRGB(static_cast<float>(seed_intensities[j])/255.0f, b, g, r); // make sure to convert away from char
+    normalisedValueToRGB(static_cast<float>(seed_intensities_and_grad[j*3])/255.0f, b, g, r); // make sure to convert away from char
 
     intensities.push_back(255*r);
     intensities.push_back(255*g);
     intensities.push_back(255*b);
-
-    lm0.x() = seeds[j].x();
-    lm0.y() = seeds[j].y();
-    lm0.z() = seeds[j].z();
+    
+    lm0 = Eigen::Vector3f( nics[j*2], nics[j*2+1], 1.0f ) / idepths[j];
 
     *ptr_vertices++ = lm0.x();
     *ptr_vertices++ = lm0.y();
@@ -109,14 +106,14 @@ KeyFrame::KeyFrame(
  ** Construct from a Mapped Keyframe
  *****************************************************************************/
 
-KeyFrame::KeyFrame(const int id,
-         const Sophus::SE3f& T,
-         const bool& pinned,
-         const std::vector<Eigen::Vector3f>& seeds,
-         const std::vector<float>& seed_variances,
-         const std::vector<unsigned char>& seed_intensities,
-         const float& focal_length_times_baseline
-        )
+KeyFrame::KeyFrame( const int id,
+                    const Sophus::SE3f& T,
+                    const bool& pinned,
+                    const std::vector<float> & nics,
+                    const std::vector<float> & idepths, 
+                    const std::vector<float>& seed_variances,
+                    const std::vector<unsigned char>& seed_intensities_and_grad,
+                    const float& focal_length_times_baseline )
 : id(id)
 , T_frame_rel_map(T)
 , pinned(pinned)
@@ -127,44 +124,38 @@ KeyFrame::KeyFrame(const int id,
   axis_scale_factor = pinned ? 1.25 : 1.0;
 
   // not very optimal...better to reserve and then push back
-  vertices.reserve( seeds.size() * 3 );
-  variance_lines.reserve( seeds.size() * 3 * 2 );
+  vertices.reserve( idepths.size() * 3 );
+  variance_lines.reserve( idepths.size() * 3 * 2 );
 
   // precompute some data for the point clouds
   float * ptr_var = variance_lines.data();
   Eigen::Vector3f lm0, lmp, lmn;
-//  const float depth_variance_threshold = 0.04f;
-  const float depth_variance_threshold = 0.02f;
+  const float depth_variance_threshold = 0.04f;
+//  const float depth_variance_threshold = 0.02f;
   const float sq_depth_variance_threshold = depth_variance_threshold *depth_variance_threshold;
 
-  for( int j(0); j < seeds.size(); j++ )
+  for( int j(0); j < idepths.size(); j++ )
   {
-//    float disp_var = std::sqrt( seed_variances[j] );
-//    float disp = focal_length_times_baseline / seeds[j].z();
-//    float disp_f = (disp - disp_var); if( disp_f < 1e-3f ) disp_f = 1e-3f;
-//    float disp_n = (disp + disp_var);
-//    float depth_var = focal_length_times_baseline / disp_f - focal_length_times_baseline / disp_n;
-    
     float inverse_depth_var = std::sqrt( seed_variances[j] );
-    float inverse_depth = 1.0f / seeds[j].z();
-    float inverse_depth_f = (inverse_depth - inverse_depth_var); if( inverse_depth_f < 1e-3f ) inverse_depth_f = 1e-3f;
+    float inverse_depth = idepths[j];
+    float inverse_depth_f = (inverse_depth - inverse_depth_var); 
+    if( inverse_depth_f < 1e-3f ) inverse_depth_f = 1e-3f;
     float inverse_depth_n = (inverse_depth + inverse_depth_var);
     float depth_var = 1.0f / inverse_depth_f - 1.0f / inverse_depth_n;
     
     depth_var *= depth_var;
 
-    if( depth_var < sq_depth_variance_threshold) {
-      intensities.push_back( seed_intensities[j] );
-      intensities.push_back( seed_intensities[j] );
-      intensities.push_back( seed_intensities[j] );
+    if( depth_var < sq_depth_variance_threshold) 
+    {
+      intensities.push_back( seed_intensities_and_grad[j*3] );
+      intensities.push_back( seed_intensities_and_grad[j*3] );
+      intensities.push_back( seed_intensities_and_grad[j*3] );
+      
+      lm0 = Eigen::Vector3f( nics[j*2], nics[j*2+1], 1.0f ) / inverse_depth;
 
-      lm0.x() = seeds[j].x();
-      lm0.y() = seeds[j].y();
-      lm0.z() = seeds[j].z();
-
-      vertices.push_back(seeds[j].x());
-      vertices.push_back(seeds[j].y());
-      vertices.push_back(seeds[j].z());
+      vertices.push_back(lm0.x());
+      vertices.push_back(lm0.y());
+      vertices.push_back(lm0.z());
 
       float depth = lm0.z();
       lm0 /= depth;
@@ -187,6 +178,77 @@ KeyFrame::KeyFrame(const int id,
   }
 }
 
+
+KeyFrame::KeyFrame( const int id,
+                    const Sophus::SE3f& T,
+                    const bool& pinned,
+                    const std::vector< Eigen::Vector3f > & seeds, 
+                    const std::vector<float>& seed_variances,
+                    const std::vector<unsigned char>& seed_intensities,
+                    const float& focal_length_times_baseline )
+: id(id)
+, T_frame_rel_map(T)
+, pinned(pinned)
+, updated(true)
+, gl_id_start(-1)
+{
+  axis_colour_scheme = pinned ? AxisColourGolden : AxisColourRGB;
+  axis_scale_factor = pinned ? 1.25 : 1.0;
+
+  // not very optimal...better to reserve and then push back
+  vertices.reserve( seeds.size() * 3 );
+  variance_lines.reserve( seeds.size() * 3 * 2 );
+
+  // precompute some data for the point clouds
+  float * ptr_var = variance_lines.data();
+  Eigen::Vector3f lm0, lmp, lmn;
+//  const float depth_variance_threshold = 0.04f;
+  const float depth_variance_threshold = 0.02f;
+  const float sq_depth_variance_threshold = depth_variance_threshold *depth_variance_threshold;
+
+  for( int j(0); j < seeds.size(); j++ )
+  {
+    float inverse_depth_var = std::sqrt( seed_variances[j] );
+    float inverse_depth = 1.0f / seeds[j].z();
+    float inverse_depth_f = (inverse_depth - inverse_depth_var); 
+    if( inverse_depth_f < 1e-3f ) inverse_depth_f = 1e-3f;
+    float inverse_depth_n = (inverse_depth + inverse_depth_var);
+    float depth_var = 1.0f / inverse_depth_f - 1.0f / inverse_depth_n;
+    
+    depth_var *= depth_var;
+
+    if( depth_var < sq_depth_variance_threshold) 
+    {
+      intensities.push_back( seed_intensities[j*3] );
+      intensities.push_back( seed_intensities[j*3] );
+      intensities.push_back( seed_intensities[j*3] );
+      
+      lm0 = seeds[j];
+
+      vertices.push_back(lm0.x());
+      vertices.push_back(lm0.y());
+      vertices.push_back(lm0.z());
+
+      float depth = lm0.z();
+      lm0 /= depth;
+
+      // draw the variance as line
+      float depth_n = depth + 0.0;
+      float depth_p = depth - 0.0;
+      if( depth_p < 1e-3f ) depth_p = 1e-3f;
+      lmp = lm0 * depth_p;
+      lmn = lm0 * depth_n;
+
+      variance_lines.push_back(lmp.x());
+      variance_lines.push_back(lmp.y());
+      variance_lines.push_back(lmp.z());
+
+      variance_lines.push_back(lmn.x());
+      variance_lines.push_back(lmn.y());
+      variance_lines.push_back(lmn.z());
+    }
+  }
+}
 KeyFrame::~KeyFrame() {
   if ( gl_id_start > 0 ) {
     glDeleteLists(gl_id_start, 3);

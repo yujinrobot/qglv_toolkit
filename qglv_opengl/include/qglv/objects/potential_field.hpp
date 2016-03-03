@@ -12,6 +12,7 @@
 ** Includes
 *****************************************************************************/
 
+#include <limits>
 #include <memory>
 #include <vector>
 
@@ -41,8 +42,7 @@ public:
   PotentialField(const unsigned int& nx,
                  const unsigned int& ny,
                  const float& resolution,
-                 const std::vector<float>& potential_array,
-                 const float& threshold = std::numeric_limits<float>::max());
+                 const std::vector<float>& potential_array);
   virtual ~PotentialField();
   void draw();
 
@@ -56,22 +56,20 @@ private:
   std::vector< float > values;
 
   template<typename element_type>
-  void _init(const std::vector<element_type>& potential_array, const float& threshold) {
+  void _init(const std::vector<element_type>& potential_array) {
     // normalise
     float min_value = std::numeric_limits<float>::max();
     float max_value = std::numeric_limits<float>::min();
     for ( const auto& value : potential_array ) {
-      if ( ( value > -1*threshold ) && ( value < min_value ) ) {
-        min_value = value;
-      }
-      if ( ( value < threshold ) && ( value > max_value ) ) {
-        max_value = value;
+      if ( value != std::numeric_limits<float>::infinity() ) {
+        if ( value < min_value ) { min_value = value; }
+        if ( value > max_value ) { max_value = value; }
       }
     }
     // normalise from 0.3->0.8
     float range = (max_value > min_value) ? (max_value - min_value) : 1.0;
     for ( unsigned int i = 0; i < potential_array.size(); ++i ) {
-      if ( ( potential_array[i] >= threshold ) || ( potential_array[i] <= -1.0*threshold ) ) {
+      if ( potential_array[i] == std::numeric_limits<float>::infinity() ) {
         values[i] = 0.0;
       } else {
         values[i] = 0.1 + 0.8*(potential_array[i] - min_value)/range;

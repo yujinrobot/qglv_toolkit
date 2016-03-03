@@ -40,14 +40,13 @@ PotentialField::PotentialField(const unsigned int& nx,
 , resolution(resolution)
 , values(potential_array.size())
 {
-  _init(potential_array, std::numeric_limits<float>::max());
+  _init(potential_array);
 }
 
 PotentialField::PotentialField(const unsigned int& nx,
                                const unsigned int& ny,
                                const float& resolution,
-                               const std::vector<float>& potential_array,
-                               const float& threshold
+                               const std::vector<float>& potential_array
                               )
 : gl_id(-1)
 , gl_vertex_buffer_id(0)
@@ -57,7 +56,7 @@ PotentialField::PotentialField(const unsigned int& nx,
 , resolution(resolution)
 , values(potential_array.size())
 {
-  _init(potential_array, threshold);
+  _init(potential_array);
 }
 
 PotentialField::~PotentialField() {

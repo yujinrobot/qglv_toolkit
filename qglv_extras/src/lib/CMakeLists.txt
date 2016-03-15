@@ -26,13 +26,13 @@ target_link_libraries(${PROJECT_NAME}
     ${catkin_LIBRARIES}
     ${OPENGL_LIBRARY}
     ${QT_LIBRARIES}
-    ${QGLViewer_LIBRARY}
+    ${QGLViewer_LIBRARIES}
 )
 
 ##############################################################################
 # Installs
 ##############################################################################
- 
+
 install(TARGETS ${PROJECT_NAME}
    RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

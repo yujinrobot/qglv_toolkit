@@ -23,7 +23,7 @@ find_package(sophus REQUIRED)
 
 # TODO: put this logic in a cmake find module - repeated in qglv_gallery
 find_path(QGLViewer_INCLUDE_DIRS QGLViewer/qglviewer.h)
-find_library(QGLViewer_LIBRARY NAMES QGLViewer)
+find_library(QGLViewer_LIBRARIES NAMES QGLViewer)
 # Since we have no cmake module, for QGLViewer, we must fetch qt ourselves.
 set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
 if(QGLViewer_INCLUDE_DIRS)
@@ -52,7 +52,7 @@ set(QT_INCLUDE_DIRS ${QT_INCLUDES})
 if(${QGLViewer_VERSION} GREATER "20399")
     catkin_package(
         INCLUDE_DIRS include
-        LIBRARIES ${PROJECT_NAME} 
+        LIBRARIES ${PROJECT_NAME}
         CATKIN_DEPENDS
             qglv_opengl
         DEPENDS

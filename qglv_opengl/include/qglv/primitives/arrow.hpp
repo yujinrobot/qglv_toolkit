@@ -60,7 +60,10 @@ void arrow( const Sophus::SE3Group<T> & pose, const float &length, const float &
   if (radius < 0.0) {
     used_radius = 0.05 * length;
   }
-  const double head = 2.5*(used_radius / length) + 0.1;
+  // DJS : I don't really understand how this code generates an arrow, it's a bit dodgy
+  // and have had bugs with it when the length is small
+  // this should never be >= 0.8 as it will cause coneRadiusCoef to become zero/negative
+  const double head = std::min(2.5*(used_radius / length) + 0.1, 0.6);
   const double coneRadiusCoef = 4.0 - 5.0 * head;
   gluCylinder(quadric, used_radius, used_radius, length * (1.0 - head/coneRadiusCoef), subdivisions, 1);
   glTranslatef(0.0f, 0.0f, float(length * (1.0 - head)));

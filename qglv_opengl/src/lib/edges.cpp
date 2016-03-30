@@ -91,15 +91,6 @@ DirectedEdges::~DirectedEdges() {
 
 void DirectedEdges::add(const Sophus::SE3f& T_start, const Sophus::SE3f& T_end) {
   transforms.push_back(std::pair<Sophus::SE3f, Sophus::SE3f>(T_start, T_end));
-//  // convert into a convenient form for gl drawing
-//  Sophus::SE3f T_inv = T_start.inverse();
-//  vertice_array.push_back(T_inv.translation().x());
-//  vertice_array.push_back(T_inv.translation().y());
-//  vertice_array.push_back(T_inv.translation().z());
-//  T_inv = T_end.inverse();
-//  vertice_array.push_back(T_inv.translation().x());
-//  vertice_array.push_back(T_inv.translation().y());
-//  vertice_array.push_back(T_inv.translation().z());
   updated = true;
 }
 

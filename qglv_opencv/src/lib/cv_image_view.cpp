@@ -66,7 +66,6 @@ void CvImageView::resizeEvent(QResizeEvent* event)
  *****************************************************************************/
 
 void CvImageView::show404Image() {
-  std::cout << "Showing 404 image" << std::endl;
   QPixmap pixmap(":/images/never.jpg");
   scene->clear();
   scene->addPixmap(pixmap);

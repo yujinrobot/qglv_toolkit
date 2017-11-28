@@ -7,7 +7,12 @@
 ** Includes
 *****************************************************************************/
 
-#include <QtGui/qapplication.h>
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+  #include <QtWidgets>
+#else 
+  #include <QtGui/qapplication.h>
+#endif
 #include <QSplitter>
 #include <QGLViewer/qglviewer.h>
 #include <QGLViewer/manipulatedCameraFrame.h>

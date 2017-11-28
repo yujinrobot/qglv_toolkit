@@ -17,10 +17,27 @@ find_package(catkin
         ecl_command_line
     )
 
-find_package(OpenCV REQUIRED)
-set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-include(${QT_USE_FILE})
+find_package(OpenCV 2 REQUIRED)
+
+find_package(Qt5 QUIET COMPONENTS 
+  Core 
+  Widgets)
+
+if (Qt5_FOUND)
+  set(QT_INCLUDES 
+    ${Qt5Core_INCLUDE_DIRS} 
+    ${Qt5Widgets_INCLUDE_DIRS})
+  set(QT_LIBRARIES 
+    Qt5::Core 
+    Qt5::Widgets)
+  add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
+else()
+  set(QT_INCLUDE_DIRS_NO_SYSTEM TRUE)
+  find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+  include(${QT_USE_FILE})
+  set(QT_INCLUDES ${QT_INCLUDE_DIR} ${QT_INCLUDE_DIR}/QtCore ${QT_INCLUDE_DIR}/QtGui)
+  set(QT_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
+endif()
 
 ##############################################################################
 # Catkin
@@ -37,7 +54,6 @@ catkin_package(
     CATKIN_DEPENDS
         ecl_command_line
     DEPENDS
-        QT
         OpenCV
     )
 

@@ -9,6 +9,10 @@
 
 #include <qapplication.h>
 #include <QGLViewer/qglviewer.h>
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+  #include <QGLViewer/manipulatedFrame.h>
+#endif
 #include <QKeyEvent>
 
 using namespace qglviewer;

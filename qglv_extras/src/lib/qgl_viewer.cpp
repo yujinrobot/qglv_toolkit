@@ -27,7 +27,9 @@ QGLViewer::QGLViewer(QWidget *parent)
   // MouseBindings need to be here so the mouseString gets modified for use early.
   setMouseTracking(true);
   setMouseBinding(Qt::ControlModifier, Qt::LeftButton, CAMERA, SCREEN_ROTATE);
+#if QGLVIEWER_VERSION < 0x020501
   setMouseBinding(Qt::NoModifier, Qt::LeftButton | Qt::RightButton, CAMERA, SCREEN_ROTATE);
+#endif
 }
 
 QGLViewer::~QGLViewer() {}

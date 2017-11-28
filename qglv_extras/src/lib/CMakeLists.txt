@@ -8,13 +8,19 @@ file(GLOB SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp)
 # Moc Sources
 ##############################################################################
 
-qt4_wrap_cpp(MOC_SOURCES
-
+if (Qt5_FOUND)
+  qt5_wrap_cpp(MOC_SOURCES
     ${PROJECT_SOURCE_DIR}/include/qglv/objects/fat_man.hpp
     ${PROJECT_SOURCE_DIR}/include/qglv/objects/teleport_arrow.hpp
-
     ${PROJECT_SOURCE_DIR}/include/qglv/widgets/qgl_viewer.hpp
-)
+  )
+else()
+  qt4_wrap_cpp(MOC_SOURCES
+    ${PROJECT_SOURCE_DIR}/include/qglv/objects/fat_man.hpp
+    ${PROJECT_SOURCE_DIR}/include/qglv/objects/teleport_arrow.hpp
+    ${PROJECT_SOURCE_DIR}/include/qglv/widgets/qgl_viewer.hpp
+  )
+endif()
 
 ##############################################################################
 # Library

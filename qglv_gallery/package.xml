@@ -12,10 +12,10 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   
-  <build_depend>libqglviewer-qt4-dev</build_depend>
+  <build_depend>libqglviewer-dev</build_depend>
   <build_depend>opengl</build_depend>
 
-  <run_depend>libqglviewer-qt4</run_depend>
+  <run_depend>libqglviewer-dev</run_depend>
   <run_depend>opengl</run_depend>
 
    <!-- glut only for qgl examples -->

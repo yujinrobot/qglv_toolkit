@@ -34,8 +34,30 @@ if(QGLViewer_INCLUDE_DIRS)
   message(STATUS "QGLViewer_VERSION..........${QGLViewer_VERSION}")
 endif()
 
-find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
-include(${QT_USE_FILE})
+find_package(Qt5 QUIET COMPONENTS 
+  Core 
+  Widgets 
+  Xml 
+  OpenGL)
+
+if (Qt5_FOUND)
+  set(QT_INCLUDES 
+    ${Qt5Core_INCLUDE_DIRS} 
+    ${Qt5Widgets_INCLUDE_DIRS} 
+    ${Qt5Xml_INCLUDE_DIRS} 
+    ${Qt5OpenGL_INCLUDE_DIRS})
+  set(QT_LIBRARIES 
+    Qt5::Core 
+    Qt5::Widgets 
+    Qt5::Xml 
+    Qt5::OpenGL)
+  add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
+else()
+  find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
+  include(${QT_USE_FILE})
+  set(QT_INCLUDES ${QT_INCLUDE_DIR} ${QT_INCLUDE_DIR}/QtCore ${QT_INCLUDE_DIR}/QtGui ${QT_INCLUDE_DIR}/QtOpenGL)
+  set(QT_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTOPENGL_LIBRARY})
+endif()
 
 ##############################################################################
 # Catkin
@@ -59,7 +81,6 @@ if(${QGLViewer_VERSION} GREATER "20399")
             Eigen
             OPENGL
             QGLViewer
-            QT
             sophus
     )
 else()
@@ -91,7 +112,7 @@ include_directories(
 # ubuntu saucy has 203xx versions, make sure to avoid building them as
 # we currently do not support (trusty has 205xx)
 if(${QGLViewer_VERSION} GREATER "20399")
-    add_subdirectory(include)
+  add_subdirectory(include)
   add_subdirectory(src)
 endif()
 

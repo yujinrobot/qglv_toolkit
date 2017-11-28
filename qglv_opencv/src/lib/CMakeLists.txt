@@ -2,16 +2,26 @@
 # Qt
 ##############################################################################
 
-qt4_wrap_cpp(
+if (Qt5_FOUND)
+  qt5_wrap_cpp(
     MOC_SOURCES
-        ${PROJECT_SOURCE_DIR}/include/qglv/widgets/cv_image_view.hpp
-)
-
-qt4_add_resources(
+      ${PROJECT_SOURCE_DIR}/include/qglv/widgets/cv_image_view.hpp
+  )
+  qt5_add_resources(
     UI_IMAGE_RESOURCES
-        ${PROJECT_SOURCE_DIR}/resources/images/images.qrc
-)
-
+      ${PROJECT_SOURCE_DIR}/resources/images/images.qrc
+  )
+else()
+  qt4_wrap_cpp(
+    MOC_SOURCES
+      ${PROJECT_SOURCE_DIR}/include/qglv/widgets/cv_image_view.hpp
+  )
+  qt4_add_resources(
+    UI_IMAGE_RESOURCES
+      ${PROJECT_SOURCE_DIR}/resources/images/images.qrc
+  )
+endif()
+  
 ##############################################################################
 # Sources
 ##############################################################################

@@ -2,7 +2,12 @@
 # Qt Applications
 ##############################################################################
 
-qt4_wrap_cpp(MOC_SOURCES signal404.hpp)
+if (Qt5_FOUND)
+  qt5_wrap_cpp(MOC_SOURCES signal404.hpp)
+else()
+  qt4_wrap_cpp(MOC_SOURCES signal404.hpp)
+endif()
+
 add_executable(demo_cv_image_view cv_image_view.cpp ${MOC_SOURCES})
 target_link_libraries(
     demo_cv_image_view

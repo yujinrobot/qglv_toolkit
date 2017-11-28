@@ -2,8 +2,14 @@
 # Qt Source Generation
 ##############################################################################
 
-QT4_WRAP_CPP(MOC_SOURCES ${PROJECT_SOURCE_DIR}/include/qglv/gallery.hpp)
-QT4_WRAP_UI(UI_INTERFACE_SOURCES ${PROJECT_SOURCE_DIR}/ui/gallery_interface.ui)
+if (Qt5_FOUND)
+  QT5_WRAP_CPP(MOC_SOURCES ${PROJECT_SOURCE_DIR}/include/qglv/gallery.hpp)
+  QT5_WRAP_UI(UI_INTERFACE_SOURCES ${PROJECT_SOURCE_DIR}/ui/gallery_interface.ui)
+else()
+  QT4_WRAP_CPP(MOC_SOURCES ${PROJECT_SOURCE_DIR}/include/qglv/gallery.hpp)
+  QT4_WRAP_UI(UI_INTERFACE_SOURCES ${PROJECT_SOURCE_DIR}/ui/gallery_interface.ui)
+endif()
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR})  # this is where ui headers are dropped.
 
 ##############################################################################
